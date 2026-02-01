@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>류한월 작가의 홈페이지</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Noto+Serif+KR:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sunset-deep: #1a0e2e;
+            --sunset-purple: #4a1942;
+            --sunset-pink: #ff6b9d;
+            --sunset-orange: #ff8c42;
+            --sunset-yellow: #ffd97d;
+            --sunset-sky: #ff9a76;
+            --text-light: #ffefd5;
+            --text-gold: #ffcc88;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Serif KR', serif;
+            background: linear-gradient(180deg, 
+                var(--sunset-deep) 0%, 
+                var(--sunset-purple) 30%, 
+                var(--sunset-pink) 60%, 
+                var(--sunset-orange) 85%, 
+                var(--sunset-yellow) 100%);
+            min-height: 100vh;
+            color: var(--text-light);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 별 배경 효과 */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* 구름 효과 */
+        .clouds {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            filter: blur(30px);
+            animation: float 40s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            50% { transform: translateX(100px) translateY(-50px); }
+        }
+
+        /* 컨테이너 */
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* 헤더 */
+        header {
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            animation: fadeInDown 1.5s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--text-gold), var(--sunset-yellow), var(--text-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            text-shadow: 0 0 60px rgba(255, 204, 136, 0.5);
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+
+        .subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: var(--text-gold);
+            font-weight: 300;
+            letter-spacing: 0.5em;
+            animation: fadeIn 2s ease-out 0.5s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* 네비게이션 */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 4rem 0;
+            flex-wrap: wrap;
+            animation: fadeIn 2s ease-out 1s both;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 0.8rem 2rem;
+            border: 2px solid rgba(255, 204, 136, 0.3);
+            border-radius: 50px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 204, 136, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        nav a:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        nav a:hover {
+            border-color: var(--text-gold);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 139, 66, 0.4);
+        }
+
+        nav a span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 메인 섹션 */
+        .main-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin: 6rem 0;
+            padding: 0 2rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 3rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeInUp 1s ease-out both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 204, 136, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.2s; }
+        .card:nth-child(2) { animation-delay: 0.4s; }
+        .card:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(255, 107, 157, 0.3);
+            border-color: rgba(255, 204, 136, 0.4);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--text-gold);
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            line-height: 1.8;
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* 인용구 섹션 */
+        .quote-section {
+            text-align: center;
+            padding: 6rem 2rem;
+            margin: 4rem 0;
+            position: relative;
+        }
+
+        blockquote {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            font-style: italic;
+            color: var(--text-light);
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.6;
+            position: relative;
+            animation: fadeIn 2s ease-out;
+        }
+
+        blockquote::before,
+        blockquote::after {
+            content: '"';
+            font-size: 6rem;
+            color: var(--sunset-yellow);
+            opacity: 0.3;
+            position: absolute;
+        }
+
+        blockquote::before {
+            top: -2rem;
+            left: -2rem;
+        }
+
+        blockquote::after {
+            bottom: -4rem;
+            right: -2rem;
+        }
+
+        .quote-author {
+            margin-top: 3rem;
+            font-size: 1.3rem;
+            color: var(--text-gold);
+            font-weight: 500;
+        }
+
+        /* 푸터 */
+        footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            margin-top: 6rem;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 2s ease-out;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: var(--text-gold);
+            font-size: 2rem;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            transform: scale(1.3) rotate(10deg);
+            color: var(--sunset-yellow);
+            filter: drop-shadow(0 0 20px var(--sunset-yellow));
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            header {
+                padding: 4rem 1rem 2rem;
+            }
+
+            nav {
+                gap: 1rem;
+            }
+
+            nav a {
+                padding: 0.6rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .main-section {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .card {
+                padding: 2rem;
+            }
+
+            blockquote::before,
+            blockquote::after {
+                font-size: 4rem;
+            }
+        }
+
+        /* 스크롤 인디케이터 */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounceArrow 2s infinite;
+            z-index: 10;
+            color: var(--text-gold);
+            font-size: 2rem;
+        }
+
+        @keyframes bounceArrow {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- 별 배경 -->
+    <div class="stars" id="stars"></div>
+
+    <!-- 구름 효과 -->
+    <div class="clouds">
+        <div class="cloud" style="top: 10%; left: 10%; width: 300px; height: 100px; animation-delay: 0s;"></div>
+        <div class="cloud" style="top: 30%; right: 15%; width: 250px; height: 80px; animation-delay: 5s;"></div>
+        <div class="cloud" style="top: 50%; left: 20%; width: 200px; height: 90px; animation-delay: 10s;"></div>
+        <div class="cloud" style="bottom: 20%; right: 25%; width: 280px; height: 95px; animation-delay: 15s;"></div>
+    </div>
+
+    <div class="container">
+        <!-- 헤더 -->
+        <header>
+            <h1>류한월 작가의 홈페이지</h1>
+            <p class="subtitle">文 學 의 世 界</p>
+        </header>
+
+        <!-- 네비게이션 -->
+        <nav>
+            <a href="#works"><span>작품</span></a>
+            <a href="#about"><span>소개</span></a>
+            <a href="#news"><span>소식</span></a>
+            <a href="#contact"><span>연락</span></a>
+        </nav>
+
+        <!-- 메인 섹션 -->
+        <div class="main-section">
+            <div class="card">
+                <span class="card-icon">📚</span>
+                <h2>최신 작품</h2>
+                <p>석양이 지는 하늘 아래, 새로운 이야기가 펼쳐집니다. 류한월 작가의 최신 장편소설 '황혼의 서사시'가 출간되었습니다. 시간과 기억, 그리고 영원에 대한 깊은 성찰을 담은 작품입니다.</p>
+            </div>
+
+            <div class="card">
+                <span class="card-icon">✍️</span>
+                <h2>작가 소개</h2>
+                <p>감성적이고 서정적인 문체로 독자들의 마음을 사로잡는 류한월 작가. 인간의 내면 풍경을 섬세하게 그려내며, 일상 속 숨겨진 아름다움을 발견하는 작품 세계를 펼치고 있습니다.</p>
+            </div>
+
+            <div class="card">
+                <span class="card-icon">🏆</span>
+                <h2>수상 경력</h2>
+                <p>신인문학상, 한국문학상 등 다수의 권위 있는 문학상을 수상하며 문단의 주목을 받고 있습니다. 독자와 평론가 모두에게 사랑받는 작가로 자리매김하고 있습니다.</p>
+            </div>
+        </div>
+
+        <!-- 인용구 섹션 -->
+        <div class="quote-section">
+            <blockquote>
+                글쓰기는 석양을 바라보는 것과 같다.<br>
+                매일 다른 색으로 물들지만,<br>
+                언제나 아름답다.
+            </blockquote>
+            <p class="quote-author">— 류한월</p>
+        </div>
+
+        <!-- 푸터 -->
+        <footer>
+            <div class="social-links">
+                <a href="#" title="이메일">✉️</a>
+                <a href="#" title="블로그">📝</a>
+                <a href="#" title="인스타그램">📷</a>
+                <a href="#" title="트위터">🐦</a>
+            </div>
+            <p class="copyright">© 2024 류한월 작가의 홈페이지. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- 스크롤 인디케이터 -->
+    <div class="scroll-indicator">↓</div>
+
+    <script>
+        // 별 생성
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.width = star.style.height = Math.random() * 3 + 1 + 'px';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starsContainer.appendChild(star);
+        }
+
+        // 스크롤 인디케이터 숨기기
+        window.addEventListener('scroll', () => {
+            const scrollIndicator = document.querySelector('.scroll-indicator');
+            if (window.scrollY > 200) {
+                scrollIndicator.style.opacity = '0';
+            } else {
+                scrollIndicator.style.opacity = '1';
+            }
+        });
+
+        // 부드러운 스크롤
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 카드 호버 효과 강화
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                card.style.setProperty('--mouse-x', x + 'px');
+                card.style.setProperty('--mouse-y', y + 'px');
+            });
+        });
+
+        // 페이지 로드 시 애니메이션
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>
